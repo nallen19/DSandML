@@ -1,0 +1,1257 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>XML, HTML, and Web Scraping</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="Practice_Activity_4_1_Webscraping_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Practice_Activity_4_1_Webscraping_files/libs/quarto-html/quarto.js"></script>
+<script src="Practice_Activity_4_1_Webscraping_files/libs/quarto-html/popper.min.js"></script>
+<script src="Practice_Activity_4_1_Webscraping_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Practice_Activity_4_1_Webscraping_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Practice_Activity_4_1_Webscraping_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Practice_Activity_4_1_Webscraping_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Practice_Activity_4_1_Webscraping_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Practice_Activity_4_1_Webscraping_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Practice_Activity_4_1_Webscraping_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">XML, HTML, and Web Scraping</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<p>JSON and XML are two different ways to represent hierarchical data. Which one is better? There are lots of articles online which discuss similarities and differences between JSON and XML and their advantages and disadvantages. Both formats are still in current usage, so it is good to be familiar with both. However, JSON is more common, so we’ll focus on working with JSON representations of hierarchical data.</p>
+<p>The reading covered an example of using Beautiful Soup to parse XML. Rather than doing another example XML now, we’ll skip straight to scraping HTML from a webpage. Both HTML and XML can be parsed in a similar way with Beautiful Soup.</p>
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="scraping-an-html-table-with-beautiful-soup" class="level2">
+<h2 class="anchored" data-anchor-id="scraping-an-html-table-with-beautiful-soup">Scraping an HTML table with Beautiful Soup</h2>
+<p>Open the URL https://en.wikipedia.org/wiki/List_of_United_States_cities_by_population and scroll down until you see a table of the cities in the U.S. with population over 100,000 (as of Jul 1, 2022). We’ll use Beautiful Soup to scrape information from this table.</p>
+<p>Read in the HTML from the ULR using the <code>requests</code> library.</p>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(<span class="st">"https://en.wikipedia.org/wiki/List_of_United_States_cities_by_population"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Use Beautiful Soup to parse this string into a tree called <code>soup</code></p>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> bs4 <span class="im">import</span> BeautifulSoup</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>soup <span class="op">=</span> BeautifulSoup(response.content, <span class="st">"html.parser"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>To find an HTML tag corresponding to a specific element on a webpage, right-click on it and choose “Inspect element”. Go to the cities table Wikipedia page and do this now.</p>
+<p>You should find that the cities table on the Wikipedia page corresponds to the element</p>
+<pre><code>&lt;table class="wikitable sortable jquery-tablesorter" style="text-align:center"&gt;</code></pre>
+<p>There are many <code>&lt;table&gt;</code> tags on the page.</p>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(soup.find_all(<span class="st">"table"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<pre><code>14</code></pre>
+</div>
+</div>
+<p>We can use attributes like <code>class=</code> and <code>style=</code> to narrow down the list.</p>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(soup.find_all(<span class="st">"table"</span>,</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>                  attrs<span class="op">=</span>{</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"class"</span>: <span class="st">"wikitable sortable"</span>,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"style"</span>: <span class="st">"text-align:center"</span>}</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>                  ))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<pre><code>3</code></pre>
+</div>
+</div>
+<p>At this point, you can manually inspect the tables on the webpage to find that the one we want is the first one (see <code>[0]</code> below). We’ll store this as <code>table</code>.</p>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>table <span class="op">=</span> soup.find_all(<span class="st">"table"</span>,</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>                  attrs<span class="op">=</span>{</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"class"</span>: <span class="st">"wikitable sortable"</span>,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"style"</span>: <span class="st">"text-align:center"</span>}</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>                  )[<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Now you will write code to scrape the information in <code>table</code> to create a Pandas data frame with one row for each city and columns for: city, state, population (2022 estimate), and 2020 land area (sq mi).</strong> Refer to the Notes/suggestions below as you write your code. A few Hints are provided further down, but try coding first before looking at the hints.</p>
+<p>Notes/suggestions:</p>
+<ul>
+<li>Use as a guide the code from the reading that produced the data frame of Statistics faculty</li>
+<li>Inspect the page source as you write your code</li>
+<li>You will need to write a loop to get the information for all cities, but you might want to try just scraping the info for New York first</li>
+<li>You will need to pull the text from the tag. If <code>.text</code> returns text with “” at the end, try <code>.get_text(strip = True)</code> instead of <code>.text</code></li>
+<li>Don’t forget to convert to a Pandas Data Frame; it should have 333 rows and 4 columns</li>
+<li>The goal of this exercise is just to create the Data Frame. If you were going to use it — e.g., what is the population density for all cities in CA? — then you would need to clean the data first (to clean strings and convert to quantitative). (You can use Beautiful Soup to do some of the cleaning for you, but that goes beyond our scope.)</li>
+</ul>
+<div class="cell" data-execution_count="59">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>rows <span class="op">=</span> []</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> row <span class="kw">in</span> table.find_all(<span class="st">'tr'</span>)[<span class="dv">1</span>:]:</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    cells <span class="op">=</span> row.find_all(<span class="st">'td'</span>)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    city <span class="op">=</span> cells[<span class="dv">0</span>].find(<span class="st">"a"</span>).text</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    state <span class="op">=</span> cells[<span class="dv">1</span>].find(<span class="st">"a"</span>).text</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    pop <span class="op">=</span> cells[<span class="dv">2</span>].get_text(strip<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    land <span class="op">=</span> cells[<span class="dv">5</span>].text</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    land <span class="op">=</span> re.search(<span class="vs">r"\d+\.\d+"</span>, land).group()</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    rows.append({<span class="st">"city"</span>: city,</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>                 <span class="st">"state"</span>: state,</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>                 <span class="st">"population"</span>: pop,</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>                 <span class="st">"land"</span>: <span class="bu">float</span>(land)})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="61">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>pd.DataFrame(rows)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="61">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">city</th>
+<th data-quarto-table-cell-role="th">state</th>
+<th data-quarto-table-cell-role="th">population</th>
+<th data-quarto-table-cell-role="th">land</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>New York</td>
+<td>New York</td>
+<td>8,335,897</td>
+<td>300.5</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Los Angeles</td>
+<td>California</td>
+<td>3,822,238</td>
+<td>469.5</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Chicago</td>
+<td>Illinois</td>
+<td>2,665,039</td>
+<td>227.7</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>Houston</td>
+<td>Texas</td>
+<td>2,302,878</td>
+<td>640.4</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>Phoenix</td>
+<td>Arizona</td>
+<td>1,644,409</td>
+<td>518.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">328</td>
+<td>Albany</td>
+<td>New York</td>
+<td>100,826</td>
+<td>21.4</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">329</td>
+<td>Hesperia</td>
+<td>California</td>
+<td>100,744</td>
+<td>72.7</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">330</td>
+<td>New Bedford</td>
+<td>Massachusetts</td>
+<td>100,682</td>
+<td>20.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">331</td>
+<td>Davenport</td>
+<td>Iowa</td>
+<td>100,486</td>
+<td>63.8</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">332</td>
+<td>Daly City</td>
+<td>California</td>
+<td>100,007</td>
+<td>7.6</td>
+</tr>
+</tbody>
+</table>
+
+<p>333 rows × 4 columns</p>
+</div>
+</div>
+</div>
+<p>Hints:</p>
+<ul>
+<li>Each city is a row in the table; find all the <code>&lt;tr&gt;</code> tags to find all the cities</li>
+<li>Look for the <code>&lt;td&gt;</code> tag to see table entries within a row</li>
+<li>The rank column is represented by <code>&lt;th&gt;</code> tags, rather than <code>&lt;td&gt;</code> tags. So within a row, the first (that is, <code>[0]</code>) <code>&lt;td&gt;</code> tag corresponds to the city name.</li>
+</ul>
+</section>
+<section id="aside-scraping-an-html-table-with-pandas" class="level2">
+<h2 class="anchored" data-anchor-id="aside-scraping-an-html-table-with-pandas">Aside: Scraping an HTML table with Pandas</h2>
+<p>The Pandas command <code>read_html</code> can be used to scrape information from an HTML table on a webpage.</p>
+<p>We can call <code>read_html</code> on the URL.</p>
+<div class="cell" data-execution_count="67">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ssl</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>ssl._create_default_https_context <span class="op">=</span> ssl._create_unverified_context</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="68">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>pd.read_html(<span class="st">"https://en.wikipedia.org/wiki/List_of_United_States_cities_by_population"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="68">
+<pre><code>[                                                   0
+ 0           Map all coordinates using: OpenStreetMap
+ 1  Download coordinates as: KML GPX (all coordina...,
+                     Population tables of U.S. cities
+ 0                                             Cities
+ 1  Population AreaDensityEthnic identityForeign-b...
+ 2                                        Urban areas
+ 3             Populous cities and metropolitan areas
+ 4                                 Metropolitan areas
+ 5  563 primary statistical areas175 combined stat...
+ 6                                        Megaregions
+ 7  See related population listsNorth American met...
+ 8                                                vte,
+                                                    0
+ 0  Map this section's coordinates using: OpenStre...
+ 1  Download coordinates as: KML GPX (all coordina...,
+     0                               1
+ 0 NaN                   State capital
+ 1 NaN              State largest city
+ 2 NaN  State capital and largest city
+ 3 NaN                 Federal capital,
+      2022 rank         City       State[c]  2022 estimate  2020 census  \
+ 0            1  New York[d]       New York        8335897      8804190   
+ 1            2  Los Angeles     California        3822238      3898747   
+ 2            3      Chicago       Illinois        2665039      2746388   
+ 3            4      Houston          Texas        2302878      2304580   
+ 4            5      Phoenix        Arizona        1644409      1608139   
+ ..         ...          ...            ...            ...          ...   
+ 328        329       Albany       New York         100826        99224   
+ 329        330     Hesperia     California         100744        99818   
+ 330        331  New Bedford  Massachusetts         100682       101079   
+ 331        332    Davenport           Iowa         100486       101724   
+ 332        333    Daly City     California         100007       104901   
+ 
+      Change 2020 land area 2020 land area.1 2020 population density  \
+ 0    −5.32%    300.5&nbsp;sq&nbsp;mi        778.3&nbsp;km2            29,298/sq&nbsp;mi   
+ 1    −1.96%    469.5&nbsp;sq&nbsp;mi      1,216.0&nbsp;km2             8,304/sq&nbsp;mi   
+ 2    −2.96%    227.7&nbsp;sq&nbsp;mi        589.7&nbsp;km2            12,061/sq&nbsp;mi   
+ 3    −0.07%    640.4&nbsp;sq&nbsp;mi      1,658.6&nbsp;km2             3,599/sq&nbsp;mi   
+ 4    +2.26%    518.0&nbsp;sq&nbsp;mi      1,341.6&nbsp;km2             3,105/sq&nbsp;mi   
+ ..      ...            ...              ...                     ...   
+ 328  +1.61%     21.4&nbsp;sq&nbsp;mi         55.4&nbsp;km2             4,637/sq&nbsp;mi   
+ 329  +0.93%     72.7&nbsp;sq&nbsp;mi        188.3&nbsp;km2             1,373/sq&nbsp;mi   
+ 330  −0.39%     20.0&nbsp;sq&nbsp;mi         51.8&nbsp;km2             5,054/sq&nbsp;mi   
+ 331  −1.22%     63.8&nbsp;sq&nbsp;mi        165.2&nbsp;km2             1,594/sq&nbsp;mi   
+ 332  −4.67%      7.6&nbsp;sq&nbsp;mi         19.7&nbsp;km2            13,803/sq&nbsp;mi   
+ 
+     2020 population density.1                               Location  
+ 0                  11,312/km2    40°40′N 73°56′W﻿ / ﻿40.66°N 73.94°W  
+ 1                   3,206/km2  34°01′N 118°25′W﻿ / ﻿34.02°N 118.41°W  
+ 2                   4,657/km2    41°50′N 87°41′W﻿ / ﻿41.84°N 87.68°W  
+ 3                   1,390/km2    29°47′N 95°23′W﻿ / ﻿29.79°N 95.39°W  
+ 4                   1,199/km2  33°34′N 112°05′W﻿ / ﻿33.57°N 112.09°W  
+ ..                        ...                                    ...  
+ 328                 1,790/km2    42°40′N 73°48′W﻿ / ﻿42.67°N 73.80°W  
+ 329                   530/km2  34°24′N 117°19′W﻿ / ﻿34.40°N 117.32°W  
+ 330                 1,951/km2    41°40′N 70°56′W﻿ / ﻿41.66°N 70.94°W  
+ 331                   615/km2    41°34′N 90°36′W﻿ / ﻿41.56°N 90.60°W  
+ 332                 5,329/km2  37°41′N 122°28′W﻿ / ﻿37.69°N 122.47°W  
+ 
+ [333 rows x 11 columns],
+         Population  Number of municipal governments
+ 0       1,000,000+                                9
+ 1  700,000–999,999                               10
+ 2  500,000–699,999                               18
+ 3  400,000–499,999                               11
+ 4  300,000–399,999                               21
+ 5  200,000–299,999                               56
+ 6  100,000–199,999                              208
+ 7            Total                              333,
+                                          State  Number of listed cities
+ 0                                           CA                       75
+ 1                                           TX                       42
+ 2                                           FL                       22
+ 3                                       AZ, CO                       12
+ 4                                           NC                       10
+ 5                                       MA, WA                        9
+ 6                                       GA, IL                        8
+ 7                                   MI, NJ, VA                        7
+ 8                       MO, IN, NY, OH, OR, TN                        6
+ 9                           AL, CT, KS, NV, UT                        5
+ 10                                      LA, OK                        4
+ 11                  IA, ID, MN, NM, PA, SC, WI                        3
+ 12                                      KY, NE                        2
+ 13  AK, AR, DC, HI, MD, MS, MT, ND, NH, RI, SD                        1
+ 14                          DE, ME, VT, WV, WY                        0,
+                                                    0
+ 0  Map this section's coordinates using: OpenStre...
+ 1  Download coordinates as: KML GPX (all coordina...,
+    2022 rank Municipio  2022 estimate  2020 census  Change 2020 land area  \
+ 0          1  San Juan         334776       342259  −2.19%     39.8&nbsp;sq&nbsp;mi   
+ 1          2   Bayamón         181577       185187  −1.95%     27.0&nbsp;sq&nbsp;mi   
+ 2          3  Carolina         151571       154815  −2.10%     20.7&nbsp;sq&nbsp;mi   
+ 3          4     Ponce         132138       137491  −3.89%     28.4&nbsp;sq&nbsp;mi   
+ 4          5    Caguas         125136       127244  −1.66%     10.9&nbsp;sq&nbsp;mi   
+ 
+   2020 land area.1 2020 population density 2020 population density.1  \
+ 0        103.1&nbsp;km2             8,599/sq&nbsp;mi                 3,320/km2   
+ 1         69.9&nbsp;km2             6,859/sq&nbsp;mi                 2,648/km2   
+ 2         53.6&nbsp;km2             7,479/sq&nbsp;mi                 2,888/km2   
+ 3         73.6&nbsp;km2             4,841/sq&nbsp;mi                 1,869/km2   
+ 4         28.2&nbsp;km2            11,674/sq&nbsp;mi                 4,507/km2   
+ 
+                               Location  
+ 0  18°24′N 66°04′W﻿ / ﻿18.40°N 66.06°W  
+ 1  18°23′N 66°10′W﻿ / ﻿18.38°N 66.16°W  
+ 2  18°25′N 65°59′W﻿ / ﻿18.41°N 65.98°W  
+ 3  18°00′N 66°37′W﻿ / ﻿18.00°N 66.62°W  
+ 4  18°14′N 66°02′W﻿ / ﻿18.23°N 66.04°W  ,
+                                                    0
+ 0  Map this section's coordinates using: OpenStre...
+ 1  Download coordinates as: KML GPX (all coordina...,
+    Census-designated place       State  2020 census  2010 census    Change  \
+ 0                Arlington    Virginia       238643       207627   +14.94%   
+ 1               Enterprise      Nevada       221831       108481  +104.49%   
+ 2            Spring Valley      Nevada       215597       178395   +20.85%   
+ 3            Sunrise Manor      Nevada       205618       189372    +8.58%   
+ 4                 Paradise      Nevada       191238       223167   −14.31%   
+ 5                 Metairie   Louisiana       143507       138481    +3.63%   
+ 6         East Los Angeles  California       118786       126496    −6.10%   
+ 7                  Brandon     Florida       114626       103483   +10.77%   
+ 8            The Woodlands       Texas       114436        93847   +21.94%   
+ 9             Lehigh Acres     Florida       114287        86784   +31.69%   
+ 10             Spring Hill     Florida       113568        98621   +15.16%   
+ 11               Riverview     Florida       107396        71050   +51.16%   
+ 12                Columbia    Maryland       104681        99615    +5.09%   
+ 13         Highlands Ranch    Colorado       103444        96713    +6.96%   
+ 
+    2020 land area 2020 land area.1 2020 population density  \
+ 0      26.0&nbsp;sq&nbsp;mi       67.340&nbsp;km2             9,179/sq&nbsp;mi   
+ 1      66.0&nbsp;sq&nbsp;mi      170.939&nbsp;km2             3,361/sq&nbsp;mi   
+ 2      35.5&nbsp;sq&nbsp;mi       91.945&nbsp;km2             6,073/sq&nbsp;mi   
+ 3      33.7&nbsp;sq&nbsp;mi       87.283&nbsp;km2             6,101/sq&nbsp;mi   
+ 4      42.4&nbsp;sq&nbsp;mi      109.815&nbsp;km2             4,510/sq&nbsp;mi   
+ 5      23.3&nbsp;sq&nbsp;mi       60.347&nbsp;km2             6,159/sq&nbsp;mi   
+ 6       7.5&nbsp;sq&nbsp;mi       19.425&nbsp;km2            15,838/sq&nbsp;mi   
+ 7      33.1&nbsp;sq&nbsp;mi       85.729&nbsp;km2             3,463/sq&nbsp;mi   
+ 8      43.3&nbsp;sq&nbsp;mi      112.146&nbsp;km2             2,643/sq&nbsp;mi   
+ 9      92.7&nbsp;sq&nbsp;mi      240.092&nbsp;km2             1,233/sq&nbsp;mi   
+ 10     59.9&nbsp;sq&nbsp;mi      155.140&nbsp;km2             1,896/sq&nbsp;mi   
+ 11     46.2&nbsp;sq&nbsp;mi      119.657&nbsp;km2             2,325/sq&nbsp;mi   
+ 12     31.9&nbsp;sq&nbsp;mi       82.621&nbsp;km2             3,282/sq&nbsp;mi   
+ 13     24.3&nbsp;sq&nbsp;mi       62.937&nbsp;km2             4,257/sq&nbsp;mi   
+ 
+    2020 population density.1                               Location  
+ 0                  3,544/km2    38°53′N 77°06′W﻿ / ﻿38.88°N 77.10°W  
+ 1                  1,298/km2  36°01′N 115°14′W﻿ / ﻿36.01°N 115.23°W  
+ 2                  2,345/km2  36°06′N 115°16′W﻿ / ﻿36.10°N 115.26°W  
+ 3                  2,356/km2  36°11′N 115°03′W﻿ / ﻿36.18°N 115.05°W  
+ 4                  1,740/km2  36°05′N 115°08′W﻿ / ﻿36.09°N 115.14°W  
+ 5                  2,378/km2    30°00′N 90°11′W﻿ / ﻿30.00°N 90.18°W  
+ 6                  6,115/km2  34°02′N 118°10′W﻿ / ﻿34.03°N 118.17°W  
+ 7                  1,337/km2    27°56′N 82°18′W﻿ / ﻿27.94°N 82.30°W  
+ 8                  1,020/km2    30°10′N 95°31′W﻿ / ﻿30.17°N 95.51°W  
+ 9                    476/km2    26°37′N 81°38′W﻿ / ﻿26.61°N 81.64°W  
+ 10                   732/km2    28°29′N 82°32′W﻿ / ﻿28.48°N 82.53°W  
+ 11                   898/km2    27°49′N 82°18′W﻿ / ﻿27.82°N 82.30°W  
+ 12                 1,267/km2    39°12′N 76°52′W﻿ / ﻿39.20°N 76.86°W  
+ 13                 1,644/km2  39°32′N 104°58′W﻿ / ﻿39.54°N 104.97°W  ,
+                 City          State  2022 estimate  2020 census  \
+ 0          Allegheny   Pennsylvania            NaN          NaN   
+ 1           Brooklyn       New York            NaN          NaN   
+ 2             Camden     New Jersey        70996.0      71791.0   
+ 3             Canton           Ohio        69671.0      70872.0   
+ 4     Citrus Heights     California        86433.0      87583.0   
+ 5   Clinton Township       Michigan        99448.0     100513.0   
+ 6             Duluth      Minnesota        86619.0      86697.0   
+ 7               Erie   Pennsylvania        93511.0      94831.0   
+ 8         Fall River  Massachusetts        93682.0      94000.0   
+ 9        Federal Way     Washington        97863.0     101030.0   
+ 10             Flint       Michigan        79854.0      81252.0   
+ 11              Gary        Indiana        67972.0      69093.0   
+ 12           Hammond        Indiana        76575.0      77879.0   
+ 13           Livonia       Michigan        93779.0      95535.0   
+ 14          Longmont       Colorado        98687.0      98885.0   
+ 15     Niagara Falls       New York        47993.0      48671.0   
+ 16           Norwalk     California        98537.0     102773.0   
+ 17             Parma           Ohio        79358.0      81146.0   
+ 18        Portsmouth       Virginia        97029.0      97915.0   
+ 19           Reading   Pennsylvania        94858.0      95112.0   
+ 20           Roanoke       Virginia        97847.0     100011.0   
+ 21          Scranton   Pennsylvania        75848.0      76328.0   
+ 22        Somerville  Massachusetts        79762.0      81045.0   
+ 23        St. Joseph       Missouri        70656.0      72473.0   
+ 24           Trenton     New Jersey        89661.0      90871.0   
+ 25             Utica       New York        64081.0      65283.0   
+ 26        Wilmington       Delaware        71569.0      70898.0   
+ 27        Youngstown           Ohio        59144.0      60068.0   
+ 
+     Peak population Percent decline from  peak population  \
+ 0            129896                                   NaN   
+ 1            806343                                   NaN   
+ 2            124555                               −42.36%   
+ 3            116912                               −39.38%   
+ 4            107439                               −18.48%   
+ 5            100513                                 0.00%   
+ 6            107312                               −19.21%   
+ 7            138440                               −31.50%   
+ 8            120485                               −21.98%   
+ 9            101030                                 0.00%   
+ 10           196940                               −58.74%   
+ 11           178320                               −61.25%   
+ 12           111698                               −30.28%   
+ 13           110109                               −13.24%   
+ 14           100758                                −1.86%   
+ 15           102394                               −52.47%   
+ 16           105549                                −2.63%   
+ 17           100216                               −19.03%   
+ 18           114773                               −14.69%   
+ 19           111171                               −14.45%   
+ 20           100220                                −0.21%   
+ 21           143333                               −46.75%   
+ 22           103908                               −22.00%   
+ 23           102979                               −29.62%   
+ 24           128009                               −29.01%   
+ 25           101740                               −35.83%   
+ 26           112504                               −36.98%   
+ 27           170002                               −64.67%   
+ 
+                                                 Notes  
+ 0   Peak as an independent city, annexed by Pittsb...  
+ 1   Peak as an independent city, consolidated with...  
+ 2                    Peak in 1950, −1.11% since 2020.  
+ 3                    Peak in 1950, −1.69% since 2020.  
+ 4                    Peak in 1990, −1.31% since 2020.  
+ 5                    Peak in 2020, −1.06% since 2020.  
+ 6                    Peak in 1960, −0.09% since 2020.  
+ 7                    Peak in 1960, −1.39% since 2020.  
+ 8                    Peak in 1920, −0.34% since 2020.  
+ 9                    Peak in 2020, −3.13% since 2020.  
+ 10                   Peak in 1960, −1.72% since 2020.  
+ 11                   Peak in 1960, −1.62% since 2020.  
+ 12                   Peak in 1960, −1.67% since 2020.  
+ 13                   Peak in 1970, −1.84% since 2020.  
+ 14   Peak in 2021 (estimate only), −0.20% since 2020.  
+ 15                   Peak in 1960, −1.39% since 2020.  
+ 16                   Peak in 2010, −4.12% since 2020.  
+ 17                   Peak in 1970, −2.20% since 2020.  
+ 18                   Peak in 1960, −0.90% since 2020.  
+ 19                   Peak in 1930, −0.27% since 2020.  
+ 20                   Peak in 1980, −2.16% since 2020.  
+ 21                   Peak in 1930, −0.63% since 2020.  
+ 22                   Peak in 1930, −1.58% since 2020.  
+ 23  Official peak in 1900, but there is evidence t...  
+ 24                   Peak in 1950, −1.33% since 2020.  
+ 25                   Peak in 1930, −1.84% since 2020.  
+ 26                   Peak in 1940, +0.95% since 2020.  
+ 27                   Peak in 1930, −1.54% since 2020.  ,
+   vteThe 100 most populous cities of the United States  \
+ 0  New York, New York Los Angeles, California Chi...     
+ 1                                                NaN     
+ 2  Cities ranked by United States Census Bureau p...     
+ 
+   vteThe 100 most populous cities of the United States.1  \
+ 0  New York, New York Los Angeles, California Chi...       
+ 1  New York, New York Los Angeles, California Chi...       
+ 2  Cities ranked by United States Census Bureau p...       
+ 
+                                           Unnamed: 2  \
+ 0                                                NaN   
+ 1  Portland, Oregon Detroit, Michigan Louisville,...   
+ 2                                                NaN   
+ 
+                                           Unnamed: 3  \
+ 0                                                NaN   
+ 1  Aurora, Colorado Tampa, Florida New Orleans, L...   
+ 2                                                NaN   
+ 
+                                           Unnamed: 4  
+ 0                                                NaN  
+ 1  Chandler, Arizona Chula Vista, California Buff...  
+ 2                                                NaN  ,
+     0                                                  1  \
+ 0 NaN  New York, New York Los Angeles, California Chi...   
+ 
+                                                    2  \
+ 0  Portland, Oregon Detroit, Michigan Louisville,...   
+ 
+                                                    3  \
+ 0  Aurora, Colorado Tampa, Florida New Orleans, L...   
+ 
+                                                    4  
+ 0  Chandler, Arizona Chula Vista, California Buff...  ]</code></pre>
+</div>
+</div>
+<p>However, this scrapes all the tables on the webpage, not just the one we want. As with Beautiful Soup, we can narrow the search by specifying the table attributes.</p>
+<div class="cell" data-execution_count="69">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>pd.read_html(<span class="st">"https://en.wikipedia.org/wiki/List_of_United_States_cities_by_population"</span>, attrs <span class="op">=</span> {<span class="st">'class'</span>: <span class="st">'wikitable sortable'</span>, <span class="st">"style"</span>: <span class="st">"text-align:center"</span>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="69">
+<pre><code>[     2022 rank         City       State[c]  2022 estimate  2020 census  \
+ 0            1  New York[d]       New York        8335897      8804190   
+ 1            2  Los Angeles     California        3822238      3898747   
+ 2            3      Chicago       Illinois        2665039      2746388   
+ 3            4      Houston          Texas        2302878      2304580   
+ 4            5      Phoenix        Arizona        1644409      1608139   
+ ..         ...          ...            ...            ...          ...   
+ 328        329       Albany       New York         100826        99224   
+ 329        330     Hesperia     California         100744        99818   
+ 330        331  New Bedford  Massachusetts         100682       101079   
+ 331        332    Davenport           Iowa         100486       101724   
+ 332        333    Daly City     California         100007       104901   
+ 
+      Change 2020 land area 2020 land area.1 2020 population density  \
+ 0    −5.32%    300.5&nbsp;sq&nbsp;mi        778.3&nbsp;km2            29,298/sq&nbsp;mi   
+ 1    −1.96%    469.5&nbsp;sq&nbsp;mi      1,216.0&nbsp;km2             8,304/sq&nbsp;mi   
+ 2    −2.96%    227.7&nbsp;sq&nbsp;mi        589.7&nbsp;km2            12,061/sq&nbsp;mi   
+ 3    −0.07%    640.4&nbsp;sq&nbsp;mi      1,658.6&nbsp;km2             3,599/sq&nbsp;mi   
+ 4    +2.26%    518.0&nbsp;sq&nbsp;mi      1,341.6&nbsp;km2             3,105/sq&nbsp;mi   
+ ..      ...            ...              ...                     ...   
+ 328  +1.61%     21.4&nbsp;sq&nbsp;mi         55.4&nbsp;km2             4,637/sq&nbsp;mi   
+ 329  +0.93%     72.7&nbsp;sq&nbsp;mi        188.3&nbsp;km2             1,373/sq&nbsp;mi   
+ 330  −0.39%     20.0&nbsp;sq&nbsp;mi         51.8&nbsp;km2             5,054/sq&nbsp;mi   
+ 331  −1.22%     63.8&nbsp;sq&nbsp;mi        165.2&nbsp;km2             1,594/sq&nbsp;mi   
+ 332  −4.67%      7.6&nbsp;sq&nbsp;mi         19.7&nbsp;km2            13,803/sq&nbsp;mi   
+ 
+     2020 population density.1                               Location  
+ 0                  11,312/km2    40°40′N 73°56′W﻿ / ﻿40.66°N 73.94°W  
+ 1                   3,206/km2  34°01′N 118°25′W﻿ / ﻿34.02°N 118.41°W  
+ 2                   4,657/km2    41°50′N 87°41′W﻿ / ﻿41.84°N 87.68°W  
+ 3                   1,390/km2    29°47′N 95°23′W﻿ / ﻿29.79°N 95.39°W  
+ 4                   1,199/km2  33°34′N 112°05′W﻿ / ﻿33.57°N 112.09°W  
+ ..                        ...                                    ...  
+ 328                 1,790/km2    42°40′N 73°48′W﻿ / ﻿42.67°N 73.80°W  
+ 329                   530/km2  34°24′N 117°19′W﻿ / ﻿34.40°N 117.32°W  
+ 330                 1,951/km2    41°40′N 70°56′W﻿ / ﻿41.66°N 70.94°W  
+ 331                   615/km2    41°34′N 90°36′W﻿ / ﻿41.56°N 90.60°W  
+ 332                 5,329/km2  37°41′N 122°28′W﻿ / ﻿37.69°N 122.47°W  
+ 
+ [333 rows x 11 columns],
+    2022 rank Municipio  2022 estimate  2020 census  Change 2020 land area  \
+ 0          1  San Juan         334776       342259  −2.19%     39.8&nbsp;sq&nbsp;mi   
+ 1          2   Bayamón         181577       185187  −1.95%     27.0&nbsp;sq&nbsp;mi   
+ 2          3  Carolina         151571       154815  −2.10%     20.7&nbsp;sq&nbsp;mi   
+ 3          4     Ponce         132138       137491  −3.89%     28.4&nbsp;sq&nbsp;mi   
+ 4          5    Caguas         125136       127244  −1.66%     10.9&nbsp;sq&nbsp;mi   
+ 
+   2020 land area.1 2020 population density 2020 population density.1  \
+ 0        103.1&nbsp;km2             8,599/sq&nbsp;mi                 3,320/km2   
+ 1         69.9&nbsp;km2             6,859/sq&nbsp;mi                 2,648/km2   
+ 2         53.6&nbsp;km2             7,479/sq&nbsp;mi                 2,888/km2   
+ 3         73.6&nbsp;km2             4,841/sq&nbsp;mi                 1,869/km2   
+ 4         28.2&nbsp;km2            11,674/sq&nbsp;mi                 4,507/km2   
+ 
+                               Location  
+ 0  18°24′N 66°04′W﻿ / ﻿18.40°N 66.06°W  
+ 1  18°23′N 66°10′W﻿ / ﻿18.38°N 66.16°W  
+ 2  18°25′N 65°59′W﻿ / ﻿18.41°N 65.98°W  
+ 3  18°00′N 66°37′W﻿ / ﻿18.00°N 66.62°W  
+ 4  18°14′N 66°02′W﻿ / ﻿18.23°N 66.04°W  ,
+    Census-designated place       State  2020 census  2010 census    Change  \
+ 0                Arlington    Virginia       238643       207627   +14.94%   
+ 1               Enterprise      Nevada       221831       108481  +104.49%   
+ 2            Spring Valley      Nevada       215597       178395   +20.85%   
+ 3            Sunrise Manor      Nevada       205618       189372    +8.58%   
+ 4                 Paradise      Nevada       191238       223167   −14.31%   
+ 5                 Metairie   Louisiana       143507       138481    +3.63%   
+ 6         East Los Angeles  California       118786       126496    −6.10%   
+ 7                  Brandon     Florida       114626       103483   +10.77%   
+ 8            The Woodlands       Texas       114436        93847   +21.94%   
+ 9             Lehigh Acres     Florida       114287        86784   +31.69%   
+ 10             Spring Hill     Florida       113568        98621   +15.16%   
+ 11               Riverview     Florida       107396        71050   +51.16%   
+ 12                Columbia    Maryland       104681        99615    +5.09%   
+ 13         Highlands Ranch    Colorado       103444        96713    +6.96%   
+ 
+    2020 land area 2020 land area.1 2020 population density  \
+ 0      26.0&nbsp;sq&nbsp;mi       67.340&nbsp;km2             9,179/sq&nbsp;mi   
+ 1      66.0&nbsp;sq&nbsp;mi      170.939&nbsp;km2             3,361/sq&nbsp;mi   
+ 2      35.5&nbsp;sq&nbsp;mi       91.945&nbsp;km2             6,073/sq&nbsp;mi   
+ 3      33.7&nbsp;sq&nbsp;mi       87.283&nbsp;km2             6,101/sq&nbsp;mi   
+ 4      42.4&nbsp;sq&nbsp;mi      109.815&nbsp;km2             4,510/sq&nbsp;mi   
+ 5      23.3&nbsp;sq&nbsp;mi       60.347&nbsp;km2             6,159/sq&nbsp;mi   
+ 6       7.5&nbsp;sq&nbsp;mi       19.425&nbsp;km2            15,838/sq&nbsp;mi   
+ 7      33.1&nbsp;sq&nbsp;mi       85.729&nbsp;km2             3,463/sq&nbsp;mi   
+ 8      43.3&nbsp;sq&nbsp;mi      112.146&nbsp;km2             2,643/sq&nbsp;mi   
+ 9      92.7&nbsp;sq&nbsp;mi      240.092&nbsp;km2             1,233/sq&nbsp;mi   
+ 10     59.9&nbsp;sq&nbsp;mi      155.140&nbsp;km2             1,896/sq&nbsp;mi   
+ 11     46.2&nbsp;sq&nbsp;mi      119.657&nbsp;km2             2,325/sq&nbsp;mi   
+ 12     31.9&nbsp;sq&nbsp;mi       82.621&nbsp;km2             3,282/sq&nbsp;mi   
+ 13     24.3&nbsp;sq&nbsp;mi       62.937&nbsp;km2             4,257/sq&nbsp;mi   
+ 
+    2020 population density.1                               Location  
+ 0                  3,544/km2    38°53′N 77°06′W﻿ / ﻿38.88°N 77.10°W  
+ 1                  1,298/km2  36°01′N 115°14′W﻿ / ﻿36.01°N 115.23°W  
+ 2                  2,345/km2  36°06′N 115°16′W﻿ / ﻿36.10°N 115.26°W  
+ 3                  2,356/km2  36°11′N 115°03′W﻿ / ﻿36.18°N 115.05°W  
+ 4                  1,740/km2  36°05′N 115°08′W﻿ / ﻿36.09°N 115.14°W  
+ 5                  2,378/km2    30°00′N 90°11′W﻿ / ﻿30.00°N 90.18°W  
+ 6                  6,115/km2  34°02′N 118°10′W﻿ / ﻿34.03°N 118.17°W  
+ 7                  1,337/km2    27°56′N 82°18′W﻿ / ﻿27.94°N 82.30°W  
+ 8                  1,020/km2    30°10′N 95°31′W﻿ / ﻿30.17°N 95.51°W  
+ 9                    476/km2    26°37′N 81°38′W﻿ / ﻿26.61°N 81.64°W  
+ 10                   732/km2    28°29′N 82°32′W﻿ / ﻿28.48°N 82.53°W  
+ 11                   898/km2    27°49′N 82°18′W﻿ / ﻿27.82°N 82.30°W  
+ 12                 1,267/km2    39°12′N 76°52′W﻿ / ﻿39.20°N 76.86°W  
+ 13                 1,644/km2  39°32′N 104°58′W﻿ / ﻿39.54°N 104.97°W  ]</code></pre>
+</div>
+</div>
+<p>This still returns 3 tables. As we remarked above, the table that we want is the first one (see <code>[0]</code> below).</p>
+<div class="cell" data-execution_count="70">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>df_cities2 <span class="op">=</span> pd.read_html(<span class="st">"https://en.wikipedia.org/wiki/List_of_United_States_cities_by_population"</span>, attrs <span class="op">=</span> {<span class="st">'class'</span>: <span class="st">'wikitable sortable'</span>, <span class="st">"style"</span>: <span class="st">"text-align:center"</span>})[<span class="dv">0</span>]</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>df_cities2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="70">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">2022 rank</th>
+<th data-quarto-table-cell-role="th">City</th>
+<th data-quarto-table-cell-role="th">State[c]</th>
+<th data-quarto-table-cell-role="th">2022 estimate</th>
+<th data-quarto-table-cell-role="th">2020 census</th>
+<th data-quarto-table-cell-role="th">Change</th>
+<th data-quarto-table-cell-role="th">2020 land area</th>
+<th data-quarto-table-cell-role="th">2020 land area.1</th>
+<th data-quarto-table-cell-role="th">2020 population density</th>
+<th data-quarto-table-cell-role="th">2020 population density.1</th>
+<th data-quarto-table-cell-role="th">Location</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>1</td>
+<td>New York[d]</td>
+<td>New York</td>
+<td>8335897</td>
+<td>8804190</td>
+<td>−5.32%</td>
+<td>300.5&nbsp;sq&nbsp;mi</td>
+<td>778.3&nbsp;km2</td>
+<td>29,298/sq&nbsp;mi</td>
+<td>11,312/km2</td>
+<td>40°40′N 73°56′W﻿ / ﻿40.66°N 73.94°W</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>2</td>
+<td>Los Angeles</td>
+<td>California</td>
+<td>3822238</td>
+<td>3898747</td>
+<td>−1.96%</td>
+<td>469.5&nbsp;sq&nbsp;mi</td>
+<td>1,216.0&nbsp;km2</td>
+<td>8,304/sq&nbsp;mi</td>
+<td>3,206/km2</td>
+<td>34°01′N 118°25′W﻿ / ﻿34.02°N 118.41°W</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>3</td>
+<td>Chicago</td>
+<td>Illinois</td>
+<td>2665039</td>
+<td>2746388</td>
+<td>−2.96%</td>
+<td>227.7&nbsp;sq&nbsp;mi</td>
+<td>589.7&nbsp;km2</td>
+<td>12,061/sq&nbsp;mi</td>
+<td>4,657/km2</td>
+<td>41°50′N 87°41′W﻿ / ﻿41.84°N 87.68°W</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>4</td>
+<td>Houston</td>
+<td>Texas</td>
+<td>2302878</td>
+<td>2304580</td>
+<td>−0.07%</td>
+<td>640.4&nbsp;sq&nbsp;mi</td>
+<td>1,658.6&nbsp;km2</td>
+<td>3,599/sq&nbsp;mi</td>
+<td>1,390/km2</td>
+<td>29°47′N 95°23′W﻿ / ﻿29.79°N 95.39°W</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>5</td>
+<td>Phoenix</td>
+<td>Arizona</td>
+<td>1644409</td>
+<td>1608139</td>
+<td>+2.26%</td>
+<td>518.0&nbsp;sq&nbsp;mi</td>
+<td>1,341.6&nbsp;km2</td>
+<td>3,105/sq&nbsp;mi</td>
+<td>1,199/km2</td>
+<td>33°34′N 112°05′W﻿ / ﻿33.57°N 112.09°W</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">328</td>
+<td>329</td>
+<td>Albany</td>
+<td>New York</td>
+<td>100826</td>
+<td>99224</td>
+<td>+1.61%</td>
+<td>21.4&nbsp;sq&nbsp;mi</td>
+<td>55.4&nbsp;km2</td>
+<td>4,637/sq&nbsp;mi</td>
+<td>1,790/km2</td>
+<td>42°40′N 73°48′W﻿ / ﻿42.67°N 73.80°W</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">329</td>
+<td>330</td>
+<td>Hesperia</td>
+<td>California</td>
+<td>100744</td>
+<td>99818</td>
+<td>+0.93%</td>
+<td>72.7&nbsp;sq&nbsp;mi</td>
+<td>188.3&nbsp;km2</td>
+<td>1,373/sq&nbsp;mi</td>
+<td>530/km2</td>
+<td>34°24′N 117°19′W﻿ / ﻿34.40°N 117.32°W</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">330</td>
+<td>331</td>
+<td>New Bedford</td>
+<td>Massachusetts</td>
+<td>100682</td>
+<td>101079</td>
+<td>−0.39%</td>
+<td>20.0&nbsp;sq&nbsp;mi</td>
+<td>51.8&nbsp;km2</td>
+<td>5,054/sq&nbsp;mi</td>
+<td>1,951/km2</td>
+<td>41°40′N 70°56′W﻿ / ﻿41.66°N 70.94°W</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">331</td>
+<td>332</td>
+<td>Davenport</td>
+<td>Iowa</td>
+<td>100486</td>
+<td>101724</td>
+<td>−1.22%</td>
+<td>63.8&nbsp;sq&nbsp;mi</td>
+<td>165.2&nbsp;km2</td>
+<td>1,594/sq&nbsp;mi</td>
+<td>615/km2</td>
+<td>41°34′N 90°36′W﻿ / ﻿41.56°N 90.60°W</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">332</td>
+<td>333</td>
+<td>Daly City</td>
+<td>California</td>
+<td>100007</td>
+<td>104901</td>
+<td>−4.67%</td>
+<td>7.6&nbsp;sq&nbsp;mi</td>
+<td>19.7&nbsp;km2</td>
+<td>13,803/sq&nbsp;mi</td>
+<td>5,329/km2</td>
+<td>37°41′N 122°28′W﻿ / ﻿37.69°N 122.47°W</td>
+</tr>
+</tbody>
+</table>
+
+<p>333 rows × 11 columns</p>
+</div>
+</div>
+</div>
+<p>Wait, that seemed much easier than using Beautiful Soup, and it returned a data frame, and we even got for free some formatting like removing the commas from the population! Why didn’t we just use <code>read_html</code> in the first place? It’s true the <code>read_html</code> works well when scraping information from an HTML <em>table</em>. Unfortunately, you often want to scrape information from a webpage that isn’t conveniently stored in an HTML table, in which case <code>read_html</code> won’t work. (It only searches for <code>&lt;table&gt;</code>, <code>&lt;th&gt;</code>, <code>&lt;tr&gt;</code>, and <code>&lt;td&gt;</code> tags, but there are many other HTML tags.) Though Beautiful Soup is not as simple as <code>read_html</code>, it is more flexible and thus more widely applicable.</p>
+</section>
+<section id="scraping-information-that-is-not-in-a-table-with-beautiful-soup" class="level2">
+<h2 class="anchored" data-anchor-id="scraping-information-that-is-not-in-a-table-with-beautiful-soup">Scraping information that is NOT in a <code>&lt;table&gt;</code> with Beautiful Soup</h2>
+<p>The Cal Poly course catalog http://catalog.calpoly.edu/collegesandprograms/collegeofsciencemathematics/statistics/#courseinventory contains a list of courses offered by the Statistics department. <strong>You will scrape this website to obtain a Pandas data frame with one row for each DATA or STAT course and two columns: course name and number (e.g, DATA 301. Introduction to Data Science) and term typically offered (e.g., Term Typically Offered: F, W, SP).</strong></p>
+<p>Note: Pandas <code>read_html</code> is not help here since the courses are not stored in a <code>&lt;table&gt;.</code></p>
+<div class="cell" data-execution_count="71">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>pd.read_html(<span class="st">"http://catalog.calpoly.edu/collegesandprograms/collegeofsciencemathematics/statistics/#courseinventory"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="71">
+<pre><code>[                                        Program name   Program type
+ 0                              Actuarial Preparation          Minor
+ 1  Cross Disciplinary Studies Minor in Bioinforma...          Minor
+ 2   Cross Disciplinary Studies Minor in Data Science          Minor
+ 3                                         Statistics  BS, MS, Minor]</code></pre>
+</div>
+</div>
+<p>Notes/suggestions:</p>
+<ul>
+<li>Inspect the page source as you write your code</li>
+<li>The courses are not stored in a <code>&lt;table&gt;</code>. How are they stored?</li>
+<li>You will need to write a loop to get the information for all courses, but you might want to try just scraping the info for DATA 100 first</li>
+<li>What kind of tag is the course name stored in? What is the <code>class</code> of the tag?</li>
+<li>What kind of tag is the quarter(s) the course is offered stored in? What is the <code>class</code> of the tag? Is this the only tag of this type with the class? How will you get the one you want?</li>
+<li>You don’t have to remove the number of units (e.g., 4 units) from the course name and number, but you can try it if you want</li>
+<li>You will need to pull the text from the tag. If <code>.text</code> returns text with “” at the end, try <code>get_text(strip = True)</code> instead of <code>text</code></li>
+<li>Don’t forget to convert to a Pandas Data Frame; it should have 74 rows and 2 columns</li>
+<li>The goal of this exercise is just to create the Data Frame. If you were going to use it then you might need to clean the data first. (You can use Beautiful Soup to do some of the cleaning for you, but that goes beyond our scope.)</li>
+</ul>
+<div class="cell" data-execution_count="72">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(<span class="st">"http://catalog.calpoly.edu/collegesandprograms/collegeofsciencemathematics/statistics/#courseinventory"</span>)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>soup <span class="op">=</span> BeautifulSoup(response.content, <span class="st">"html.parser"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="129">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>courses <span class="op">=</span> soup.find_all(<span class="st">"div"</span>,</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>                    attrs<span class="op">=</span>{</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"class"</span>: <span class="st">"courses"</span>}</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>                    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="130">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>rows <span class="op">=</span> []</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> coursetype <span class="kw">in</span> courses:</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>   <span class="cf">for</span> courses <span class="kw">in</span> coursetype.find_all(<span class="st">'div'</span>,</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>                                  attrs<span class="op">=</span>{</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>                                      <span class="st">"class"</span>: <span class="st">"courseblock"</span>}</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>                                  ):</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>      course <span class="op">=</span> courses.find_all(<span class="st">'p'</span>)[<span class="dv">0</span>].get_text(strip<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>      course <span class="op">=</span> re.search(<span class="vs">r"(STAT|DATA)[\s\xa0]\d+\.\s[A-Za-z]+"</span>, course).group().replace(<span class="st">'</span><span class="ch">\xa0</span><span class="st">'</span>, <span class="st">' '</span>)</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>      term <span class="op">=</span> courses.find_all(<span class="st">'div'</span>)[<span class="dv">0</span>].find_all(<span class="st">'p'</span>)[<span class="dv">0</span>].text</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>      rows.append({<span class="st">"course"</span>: course,</span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>                   <span class="st">"term"</span>: term})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="131">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>pd.DataFrame(rows)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="131">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">course</th>
+<th data-quarto-table-cell-role="th">term</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>DATA 100. Data</td>
+<td>Term Typically Offered: F, W, SP</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>DATA 301. Introduction</td>
+<td>Term Typically Offered: F, W, SP</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>DATA 401. Data</td>
+<td>Term Typically Offered: F</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>DATA 402. Mathematical</td>
+<td>Term Typically Offered: F</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>DATA 403. Data</td>
+<td>Term Typically Offered: F</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">69</td>
+<td>STAT 551. Statistical</td>
+<td>Term Typically Offered: F</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">70</td>
+<td>STAT 566. Graduate</td>
+<td>Term Typically Offered: SP</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">71</td>
+<td>STAT 570. Selected</td>
+<td>Term Typically Offered: TBD</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">72</td>
+<td>STAT 590. Graduate</td>
+<td>Term Typically Offered: F, W, SP</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">73</td>
+<td>STAT 599. Thesis</td>
+<td>Term Typically Offered: TBD</td>
+</tr>
+</tbody>
+</table>
+
+<p>74 rows × 2 columns</p>
+</div>
+</div>
+</div>
+<p>Hints:</p>
+<ul>
+<li>Each course is represented by a <code>&lt;div&gt;</code> with <code>class=courseblock</code>, so you can find all the courses with <code>soup.find_all("div", {"class": "courseblock"})</code></li>
+<li>The course name is in a <code>&lt;p&gt;</code> tag with <code>class=courseblocktitle</code>, inside a <code>&lt;strong&gt;</code> tag. (Though I don’t think we need to find the strong tag here.)</li>
+<li>The term typically offered is in <code>&lt;p&gt;</code> tag with <code>class=noindent</code>. However, there are several tags with this class; term typically offered is the first one.</li>
+<li>If you want to use Beautiful Soup to remove the course units (e.g., 4 units), find the <code>&lt;span&gt;</code> tag within the course name tag and <code>.extract()</code> this span tag</li>
+</ul>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
