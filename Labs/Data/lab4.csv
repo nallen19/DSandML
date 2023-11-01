@@ -1,0 +1,270 @@
+State,Coffee Chain,State Abbreviation,Location Count,Population
+Alaska,Starbucks,AK,24,733391
+Alabama,Starbucks,AL,73,5024279
+Arkansas,Starbucks,AR,33,3011524
+Arizona,Starbucks,AZ,279,7151502
+California,Starbucks,CA,2362,39538223
+Colorado,Starbucks,CO,371,5773714
+Connecticut,Starbucks,CT,107,3605944
+District of Columbia,Starbucks,DC,72,689545
+Delaware,Starbucks,DE,20,989948
+Florida,Starbucks,FL,616,21538187
+Georgia,Starbucks,GA,248,10711908
+Hawaii,Starbucks,HI,72,1455271
+Iowa,Starbucks,IA,49,3190369
+Idaho,Starbucks,ID,57,1839106
+Illinois,Starbucks,IL,455,12812508
+Indiana,Starbucks,IN,193,6785528
+Kansas,Starbucks,KS,65,2937880
+Kentucky,Starbucks,KY,69,4505836
+Louisiana,Starbucks,LA,76,4657757
+Massachusetts,Starbucks,MA,208,7029917
+Maryland,Starbucks,MD,212,6177224
+Maine,Starbucks,ME,22,1362359
+Michigan,Starbucks,MI,196,10077331
+Minnesota,Starbucks,MN,140,5706494
+Missouri,Starbucks,MO,118,6154913
+Mississippi,Starbucks,MS,23,2961279
+Montana,Starbucks,MT,17,1084225
+North Carolina,Starbucks,NC,181,10439388
+North Dakota,Starbucks,ND,15,779094
+Nebraska,Starbucks,NE,30,1961504
+New Hampshire,Starbucks,NH,22,1377529
+New Jersey,Starbucks,NJ,154,9288994
+New Mexico,Starbucks,NM,56,2117522
+Nevada,Starbucks,NV,188,3104614
+New York,Starbucks,NY,492,20201249
+Ohio,Starbucks,OH,266,11799448
+Oklahoma,Starbucks,OK,62,3959353
+Oregon,Starbucks,OR,279,4237256
+Pennsylvania,Starbucks,PA,279,13002700
+Rhode Island,Starbucks,RI,21,1097379
+South Carolina,Starbucks,SC,65,5118425
+South Dakota,Starbucks,SD,14,886667
+Tennessee,Starbucks,TN,126,6910840
+Texas,Starbucks,TX,720,29145505
+Utah,Starbucks,UT,59,3271616
+Virginia,Starbucks,VA,300,8631393
+Vermont,Starbucks,VT,6,643077
+Washington,Starbucks,WA,634,7705281
+Wisconsin,Starbucks,WI,119,5893718
+West Virginia,Starbucks,WV,13,1793716
+Wyoming,Starbucks,WY,16,576851
+Alabama,Dunkin' Donuts,AL,1,5024279
+Arkansas,Dunkin' Donuts,AR,11,3011524
+Arizona,Dunkin' Donuts,AZ,74,7151502
+California,Dunkin' Donuts,CA,46,39538223
+Colorado,Dunkin' Donuts,CO,5,5773714
+Connecticut,Dunkin' Donuts,CT,406,3605944
+District of Columbia,Dunkin' Donuts,DC,15,689545
+Delaware,Dunkin' Donuts,DE,57,989948
+Florida,Dunkin' Donuts,FL,654,21538187
+Georgia,Dunkin' Donuts,GA,147,10711908
+Hawaii,Dunkin' Donuts,HI,1,1455271
+Iowa,Dunkin' Donuts,IA,14,3190369
+Illinois,Dunkin' Donuts,IL,579,12812508
+Indiana,Dunkin' Donuts,IN,51,6785528
+Kansas,Dunkin' Donuts,KS,12,2937880
+Kentucky,Dunkin' Donuts,KY,34,4505836
+Louisiana,Dunkin' Donuts,LA,5,4657757
+Massachusetts,Dunkin' Donuts,MA,1101,7029917
+Maryland,Dunkin' Donuts,MD,201,6177224
+Maine,Dunkin' Donuts,ME,102,1362359
+Michigan,Dunkin' Donuts,MI,91,10077331
+Minnesota,Dunkin' Donuts,MN,6,5706494
+Missouri,Dunkin' Donuts,MO,21,6154913
+Mississippi,Dunkin' Donuts,MS,3,2961279
+North Carolina,Dunkin' Donuts,NC,63,10439388
+Nebraska,Dunkin' Donuts,NE,9,1961504
+New Hampshire,Dunkin' Donuts,NH,185,1377529
+New Jersey,Dunkin' Donuts,NJ,477,9288994
+New Mexico,Dunkin' Donuts,NM,7,2117522
+Nevada,Dunkin' Donuts,NV,26,3104614
+New York,Dunkin' Donuts,NY,1022,20201249
+Ohio,Dunkin' Donuts,OH,116,11799448
+Oklahoma,Dunkin' Donuts,OK,6,3959353
+Oregon,Dunkin' Donuts,OR,1,4237256
+Pennsylvania,Dunkin' Donuts,PA,402,13002700
+Rhode Island,Dunkin' Donuts,RI,142,1097379
+South Carolina,Dunkin' Donuts,SC,15,5118425
+Tennessee,Dunkin' Donuts,TN,55,6910840
+Texas,Dunkin' Donuts,TX,93,29145505
+Utah,Dunkin' Donuts,UT,7,3271616
+Virginia,Dunkin' Donuts,VA,147,8631393
+Vermont,Dunkin' Donuts,VT,34,643077
+Washington,Dunkin' Donuts,WA,2,7705281
+Wisconsin,Dunkin' Donuts,WI,30,5893718
+West Virginia,Dunkin' Donuts,WV,5,1793716
+California,Peet's Coffee & Tea,CA,163,39538223
+Colorado,Peet's Coffee & Tea,CO,3,5773714
+Hawaii,Peet's Coffee & Tea,HI,1,1455271
+Illinois,Peet's Coffee & Tea,IL,3,12812508
+Nevada,Peet's Coffee & Tea,NV,1,3104614
+Oregon,Peet's Coffee & Tea,OR,8,4237256
+Pennsylvania,Peet's Coffee & Tea,PA,1,13002700
+Texas,Peet's Coffee & Tea,TX,3,29145505
+Washington,Peet's Coffee & Tea,WA,14,7705281
+MA,Peet's Coffee & Tea,MA,7,7029917
+Connecticut,Tim Horton's,CT,10,3605944
+Delaware,Tim Horton's,DE,1,989948
+Indiana,Tim Horton's,IN,5,6785528
+Kentucky,Tim Horton's,KY,3,4505836
+Massachusetts,Tim Horton's,MA,5,7029917
+Maine,Tim Horton's,ME,27,1362359
+Michigan,Tim Horton's,MI,191,10077331
+Minnesota,Tim Horton's,MN,7,5706494
+Missouri,Tim Horton's,MO,1,6154913
+New Jersey,Tim Horton's,NJ,2,9288994
+New York,Tim Horton's,NY,100,20201249
+Ohio,Tim Horton's,OH,105,11799448
+Pennsylvania,Tim Horton's,PA,9,13002700
+Rhode Island,Tim Horton's,RI,26,1097379
+Virginia,Tim Horton's,VA,1,8631393
+West Virginia,Tim Horton's,WV,7,1793716
+Alabama,Panera Bread,AL,20,5024279
+Arkansas,Panera Bread,AR,13,3011524
+Arizona,Panera Bread,AZ,29,7151502
+California,Panera Bread,CA,216,39538223
+Colorado,Panera Bread,CO,32,5773714
+Connecticut,Panera Bread,CT,41,3605944
+District of Columbia,Panera Bread,DC,4,689545
+Delaware,Panera Bread,DE,9,989948
+Florida,Panera Bread,FL,227,21538187
+Georgia,Panera Bread,GA,71,10711908
+Iowa,Panera Bread,IA,27,3190369
+Idaho,Panera Bread,ID,7,1839106
+Illinois,Panera Bread,IL,154,12812508
+Indiana,Panera Bread,IN,53,6785528
+Kansas,Panera Bread,KS,27,2937880
+Kentucky,Panera Bread,KY,30,4505836
+Louisiana,Panera Bread,LA,1,4657757
+Massachusetts,Panera Bread,MA,77,7029917
+Maryland,Panera Bread,MD,69,6177224
+Maine,Panera Bread,ME,5,1362359
+Michigan,Panera Bread,MI,108,10077331
+Minnesota,Panera Bread,MN,52,5706494
+Missouri,Panera Bread,MO,91,6154913
+Mississippi,Panera Bread,MS,4,2961279
+North Carolina,Panera Bread,NC,52,10439388
+North Dakota,Panera Bread,ND,2,779094
+Nebraska,Panera Bread,NE,15,1961504
+New Hampshire,Panera Bread,NH,12,1377529
+New Jersey,Panera Bread,NJ,98,9288994
+New Mexico,Panera Bread,NM,5,2117522
+Nevada,Panera Bread,NV,6,3104614
+New York,Panera Bread,NY,138,20201249
+Ohio,Panera Bread,OH,170,11799448
+Oklahoma,Panera Bread,OK,28,3959353
+Oregon,Panera Bread,OR,12,4237256
+Pennsylvania,Panera Bread,PA,112,13002700
+Rhode Island,Panera Bread,RI,9,1097379
+South Carolina,Panera Bread,SC,17,5118425
+South Dakota,Panera Bread,SD,2,886667
+Tennessee,Panera Bread,TN,42,6910840
+Texas,Panera Bread,TX,110,29145505
+Virginia,Panera Bread,VA,98,8631393
+Vermont,Panera Bread,VT,6,643077
+Washington,Panera Bread,WA,16,7705281
+Wisconsin,Panera Bread,WI,47,5893718
+West Virginia,Panera Bread,WV,14,1793716
+Colorado,Caribou Coffee,CO,9,5773714
+District of Columbia,Caribou Coffee,DC,8,689545
+Georgia,Caribou Coffee,GA,25,10711908
+Iowa,Caribou Coffee,IA,11,3190369
+Illinois,Caribou Coffee,IL,81,12812508
+Indiana,Caribou Coffee,IN,1,6785528
+Kansas,Caribou Coffee,KS,5,2937880
+Maryland,Caribou Coffee,MD,9,6177224
+Michigan,Caribou Coffee,MI,30,10077331
+Minnesota,Caribou Coffee,MN,312,5706494
+Missouri,Caribou Coffee,MO,2,6154913
+North Carolina,Caribou Coffee,NC,26,10439388
+North Dakota,Caribou Coffee,ND,7,779094
+Nebraska,Caribou Coffee,NE,5,1961504
+Ohio,Caribou Coffee,OH,46,11799448
+Oregon,Caribou Coffee,OR,1,4237256
+Pennsylvania,Caribou Coffee,PA,6,13002700
+South Dakota,Caribou Coffee,SD,4,886667
+Virginia,Caribou Coffee,VA,19,8631393
+Wisconsin,Caribou Coffee,WI,16,5893718
+Connecticut,Au Bon Pain,CT,8,3605944
+District of Columbia,Au Bon Pain,DC,21,689545
+Florida,Au Bon Pain,FL,23,21538187
+Georgia,Au Bon Pain,GA,3,10711908
+Illinois,Au Bon Pain,IL,32,12812508
+Indiana,Au Bon Pain,IN,8,6785528
+Kentucky,Au Bon Pain,KY,1,4505836
+Massachusetts,Au Bon Pain,MA,67,7029917
+Maryland,Au Bon Pain,MD,9,6177224
+Maine,Au Bon Pain,ME,1,1362359
+Michigan,Au Bon Pain,MI,6,10077331
+Minnesota,Au Bon Pain,MN,5,5706494
+Missouri,Au Bon Pain,MO,3,6154913
+New Hampshire,Au Bon Pain,NH,6,1377529
+New Jersey,Au Bon Pain,NJ,10,9288994
+Nevada,Au Bon Pain,NV,1,3104614
+New York,Au Bon Pain,NY,58,20201249
+Ohio,Au Bon Pain,OH,10,11799448
+Pennsylvania,Au Bon Pain,PA,28,13002700
+Rhode Island,Au Bon Pain,RI,6,1097379
+Texas,Au Bon Pain,TX,16,29145505
+Virginia,Au Bon Pain,VA,10,8631393
+Arizona,The Coffee Bean & Tea Leaf,AZ,19,7151502
+California,The Coffee Bean & Tea Leaf,CA,175,39538223
+Florida,The Coffee Bean & Tea Leaf,FL,1,21538187
+Georgia,The Coffee Bean & Tea Leaf,GA,2,10711908
+Hawaii,The Coffee Bean & Tea Leaf,HI,22,1455271
+North Carolina,The Coffee Bean & Tea Leaf,NC,1,10439388
+Nevada,The Coffee Bean & Tea Leaf,NV,23,3104614
+Texas,The Coffee Bean & Tea Leaf,TX,5,29145505
+Alaska,McDonald's,AK,33,733391
+Alabama,McDonald's,AL,279,5024279
+Arkansas,McDonald's,AR,190,3011524
+Arizona,McDonald's,AZ,326,7151502
+California,McDonald's,CA,1623,39538223
+Colorado,McDonald's,CO,237,5773714
+Connecticut,McDonald's,CT,173,3605944
+District of Columbia,McDonald's,DC,37,689545
+Delaware,McDonald's,DE,46,989948
+Florida,McDonald's,FL,1142,21538187
+Georgia,McDonald's,GA,563,10711908
+Hawaii,McDonald's,HI,74,1455271
+Iowa,McDonald's,IA,181,3190369
+Idaho,McDonald's,ID,71,1839106
+Illinois,McDonald's,IL,791,12812508
+Indiana,McDonald's,IN,406,6785528
+Kansas,McDonald's,KS,188,2937880
+Kentucky,McDonald's,KY,283,4505836
+Louisiana,McDonald's,LA,291,4657757
+Massachusetts,McDonald's,MA,306,7029917
+Maryland,McDonald's,MD,402,6177224
+Maine,McDonald's,ME,72,1362359
+Michigan,McDonald's,MI,662,10077331
+Minnesota,McDonald's,MN,305,5706494
+Missouri,McDonald's,MO,396,6154913
+Mississippi,McDonald's,MS,165,2961279
+Montana,McDonald's,MT,58,1084225
+North Carolina,McDonald's,NC,475,10439388
+North Dakota,McDonald's,ND,29,779094
+Nebraska,McDonald's,NE,90,1961504
+New Hampshire,McDonald's,NH,72,1377529
+New Jersey,McDonald's,NJ,335,9288994
+New Mexico,McDonald's,NM,106,2117522
+Nevada,McDonald's,NV,169,3104614
+New York,McDonald's,NY,811,20201249
+Ohio,McDonald's,OH,843,11799448
+Oklahoma,McDonald's,OK,220,3959353
+Oregon,McDonald's,OR,209,4237256
+Pennsylvania,McDonald's,PA,603,13002700
+Rhode Island,McDonald's,RI,45,1097379
+South Carolina,McDonald's,SC,258,5118425
+South Dakota,McDonald's,SD,36,886667
+Tennessee,McDonald's,TN,409,6910840
+Texas,McDonald's,TX,1303,29145505
+Utah,McDonald's,UT,145,3271616
+Virginia,McDonald's,VA,473,8631393
+Vermont,McDonald's,VT,30,643077
+Washington,McDonald's,WA,326,7705281
+Wisconsin,McDonald's,WI,353,5893718
+West Virginia,McDonald's,WV,107,1793716
+Wyoming,McDonald's,WY,34,576851
